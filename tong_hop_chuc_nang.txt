@@ -1,0 +1,55 @@
+TỔNG HỢP CHỨC NĂNG NGHIỆP VỤ (HỆ THỐNG CỬA HÀNG ĐỒ UỐNG)
+==================================================
+
+Dựa trên tài liệu phân tích hệ thống (Use Case & Cơ sở dữ liệu), các chức năng được phân nhóm đồng bộ theo từng tác nhân (Actor) như sau:
+
+1. NHÓM CHỨC NĂNG DÀNH CHO KHÁCH HÀNG (CUSTOMER)
+--------------------------------------------------
+* Xem sản phẩm:
+  - Cho phép người dùng duyệt qua danh mục (Category).
+  - Xem chi tiết thông tin đồ uống (Product): tên, mô tả, giá cả, trạng thái và hình ảnh.
+
+* Đặt hàng & Tạo đơn hàng:
+  - Khách hàng chọn các món đồ uống vào giỏ hàng.
+  - Hệ thống ghi nhận và khởi tạo một bản ghi đơn hàng mới (Order).
+
+* Cung cấp thông tin giao hàng:
+  - Nhập số điện thoại, địa chỉ nhận hàng và các ghi chú cụ thể (Note) cho đơn hàng.
+
+* Áp dụng mã khuyến mại:
+  - Lựa chọn và áp dụng các mã giảm giá còn hiệu lực (Discount) để giảm trừ vào tổng hóa đơn.
+
+* Thanh toán:
+  - Tiến hành xác nhận thanh toán giá trị đơn hàng dựa trên tổng chi phí cuối cùng.
+
+* Đánh giá & Bình luận:
+  - Gửi phản hồi bằng văn bản (Comment) và chấm điểm số sao (Evaluate) cho từng món đồ uống cụ thể sau khi đã nhận đơn thành công (OrderItem).
+
+
+2. NHÓM CHỨC NĂNG DÀNH CHO CHỦ CỬA HÀNG (STORE OWNER)
+--------------------------------------------------
+* Quản lý danh mục & đồ uống:
+  - Thêm mới, chỉnh sửa thông tin hoặc xóa danh mục sản phẩm (Category).
+  - Quản lý chi tiết thực đơn (Product): Thay đổi giá bán, cập nhật mô tả, hình ảnh, hoặc chuyển trạng thái còn hàng/hết hàng (Available).
+
+* Quản lý đơn hàng (Cấp hệ thống/Cửa hàng):
+  - Theo dõi danh sách đơn đặt hàng thuộc quán, phê duyệt đơn, và theo dõi tiến độ xử lý.
+
+* Quản lý chương trình khuyến mại:
+  - Tạo mới, cấu hình giá trị giảm và thiết lập thời gian hết hạn cho các mã coupon (Discount).
+
+* Quản lý nguyên liệu kho:
+  - Theo dõi danh sách vật tư, cập nhật số lượng tồn kho (Quantity) của từng loại nguyên liệu (Ingredient).
+
+* Xem thống kê & Báo cáo:
+  - Theo dõi biểu đồ số liệu doanh thu, lợi nhuận hoặc số lượng sản phẩm tiêu thụ (Statistical) theo ngày/tháng/năm.
+
+
+3. NHÓM CHỨC NĂNG DÀNH CHO SHIPPER (NGƯỜI GIAO HÀNG)
+--------------------------------------------------
+* Quản lý đơn hàng giao nhận:
+  - Tiếp nhận các đơn hàng cần vận chuyển.
+  - Tra cứu nhanh thông tin liên hệ của khách hàng (Tên, Số điện thoại, Địa chỉ giao hàng).
+
+* Cập nhật trạng thái đơn hàng:
+  - Cập nhật tiến độ thực tế của đơn hàng (Đang giao hàng, Giao hàng thành công, hoặc Hủy/Thất bại) vào hệ thống (Status).

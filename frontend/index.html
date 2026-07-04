@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DrinkHub - Hệ thống quản lý đồ uống</title>
+  <meta name="description" content="Nền tảng đặt và quản lý đồ uống trực tuyến — dành cho Khách hàng, Chủ quán và Shipper.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Ambient Background -->
+  <div class="background-glow" aria-hidden="true">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+  </div>
+
+  <!-- ======= HEADER ======= -->
+  <header class="app-header" id="app-header">
+    <div class="header-brand">
+      <div class="logo-icon" id="logo-icon">
+        <i data-lucide="cup-soda"></i>
+      </div>
+      <div class="brand-text">
+        <h1>DrinkHub</h1>
+        <p class="brand-subtitle">Hệ thống quản lý đồ uống</p>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <!-- Role Navigation Tabs (rendered by JS) -->
+      <nav class="role-nav" id="role-nav"></nav>
+    </div>
+
+    <div class="header-right">
+      <!-- API Status -->
+      <div class="api-status-badge" id="api-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Đang kết nối...</span>
+      </div>
+
+      <!-- Account Switcher Dropdown -->
+      <div class="account-switcher" id="account-switcher">
+        <button class="account-btn" id="account-btn" aria-haspopup="listbox" aria-expanded="false">
+          <div class="account-avatar" id="account-avatar">
+            <i data-lucide="user"></i>
+          </div>
+          <div class="account-info">
+            <span class="account-name" id="account-name">Chọn tài khoản</span>
+            <span class="account-role-badge" id="account-role-badge">--</span>
+          </div>
+          <i data-lucide="chevron-down" class="chevron-icon" id="chevron-icon"></i>
+        </button>
+
+        <div class="account-dropdown" id="account-dropdown" role="listbox" aria-label="Chọn tài khoản test">
+          <div class="dropdown-section-title">👤 Khách hàng</div>
+          <button class="dropdown-item" role="option" data-user-id="1" data-role="1">
+            <span class="dropdown-avatar customer-avatar">KH1</span>
+            <div><span class="dropdown-name">Nguyễn Văn An</span><span class="dropdown-role customer">Khách hàng</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="2" data-role="1">
+            <span class="dropdown-avatar customer-avatar">KH2</span>
+            <div><span class="dropdown-name">Trần Thị Bích</span><span class="dropdown-role customer">Khách hàng</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="3" data-role="1">
+            <span class="dropdown-avatar customer-avatar">KH3</span>
+            <div><span class="dropdown-name">Lê Văn Cường</span><span class="dropdown-role customer">Khách hàng</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="4" data-role="1">
+            <span class="dropdown-avatar customer-avatar">KH4</span>
+            <div><span class="dropdown-name">Phạm Thị Dung</span><span class="dropdown-role customer">Khách hàng</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="5" data-role="1">
+            <span class="dropdown-avatar customer-avatar">KH5</span>
+            <div><span class="dropdown-name">Hoàng Văn Em</span><span class="dropdown-role customer">Khách hàng</span></div>
+          </button>
+
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">🏪 Chủ Shop</div>
+          <button class="dropdown-item" role="option" data-user-id="6" data-role="2">
+            <span class="dropdown-avatar owner-avatar">C1</span>
+            <div><span class="dropdown-name">Chủ Quán Phúc</span><span class="dropdown-role owner">Chủ Shop 1</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="10" data-role="2">
+            <span class="dropdown-avatar owner-avatar">C2</span>
+            <div><span class="dropdown-name">Chủ Quán Lâm</span><span class="dropdown-role owner">Chủ Shop 2</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="11" data-role="2">
+            <span class="dropdown-avatar owner-avatar">C3</span>
+            <div><span class="dropdown-name">Chủ Quán Vy</span><span class="dropdown-role owner">Chủ Shop 3</span></div>
+          </button>
+
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-title">🚴 Shipper</div>
+          <button class="dropdown-item" role="option" data-user-id="7" data-role="3">
+            <span class="dropdown-avatar shipper-avatar">S1</span>
+            <div><span class="dropdown-name">Shipper Minh</span><span class="dropdown-role shipper">Shipper</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="8" data-role="3">
+            <span class="dropdown-avatar shipper-avatar">S2</span>
+            <div><span class="dropdown-name">Shipper Hùng</span><span class="dropdown-role shipper">Shipper</span></div>
+          </button>
+          <button class="dropdown-item" role="option" data-user-id="9" data-role="3">
+            <span class="dropdown-avatar shipper-avatar">S3</span>
+            <div><span class="dropdown-name">Shipper Tuấn</span><span class="dropdown-role shipper">Shipper</span></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= MAIN CONTENT ======= -->
+  <main class="app-main" id="app-main">
+    <!-- Welcome Screen (before account selected) -->
+    <div class="welcome-screen" id="welcome-screen">
+      <div class="welcome-content">
+        <div class="welcome-icon"><i data-lucide="cup-soda"></i></div>
+        <h2>Chào mừng đến với DrinkHub</h2>
+        <p>Chọn một tài khoản từ dropdown ở góc trên bên phải để bắt đầu khám phá hệ thống.</p>
+        <div class="welcome-roles">
+          <div class="welcome-role-card customer-card">
+            <i data-lucide="shopping-bag"></i>
+            <span>Khách hàng</span>
+            <small>Đặt đồ uống, theo dõi đơn hàng</small>
+          </div>
+          <div class="welcome-role-card owner-card">
+            <i data-lucide="store"></i>
+            <span>Chủ Shop</span>
+            <small>Quản lý menu, đơn hàng & kho</small>
+          </div>
+          <div class="welcome-role-card shipper-card">
+            <i data-lucide="bike"></i>
+            <span>Shipper</span>
+            <small>Tìm và giao đơn hàng</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Container (populated by JS) -->
+    <div class="view-container hidden" id="view-container"></div>
+  </main>
+
+  <!-- ======= CART SIDEBAR (Customer only) ======= -->
+  <div class="cart-overlay hidden" id="cart-overlay"></div>
+  <aside class="cart-sidebar hidden" id="cart-sidebar">
+    <div class="cart-header">
+      <h3><i data-lucide="shopping-cart"></i> Giỏ hàng</h3>
+      <button class="btn-icon" id="cart-close-btn" title="Đóng giỏ hàng">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty" id="cart-empty">
+        <i data-lucide="shopping-cart"></i>
+        <p>Giỏ hàng trống</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer">
+      <div class="cart-total">
+        <span>Tổng cộng:</span>
+        <strong id="cart-total-price">0đ</strong>
+      </div>
+      <button class="btn btn-primary btn-full" id="checkout-btn" style="margin-top: 1rem;">
+        <i data-lucide="credit-card"></i>
+        Tiến hành thanh toán
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======= TOAST NOTIFICATION ======= -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- ======= MODAL (Generic) ======= -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal-box" id="modal-box">
+      <button class="modal-close" id="modal-close"><i data-lucide="x"></i></button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Cart FAB Button (Customer only) -->
+  <button class="cart-fab hidden" id="cart-fab" title="Mở giỏ hàng">
+    <i data-lucide="shopping-cart"></i>
+    <span class="cart-badge" id="cart-badge">0</span>
+  </button>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

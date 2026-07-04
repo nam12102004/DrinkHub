@@ -1,0 +1,100 @@
+TỔNG HỢP CẤU TRÚC DATABASE (HỆ THỐNG CỬA HÀNG ĐỒ UỐNG)
+==================================================
+
+Sơ đồ thực thể mối quan hệ (ERD) bao gồm 11 bảng được phân chia thành 4 nhóm nghiệp vụ chính:
+
+1. NHÓM QUẢN LÝ NGƯỜI DÙNG & CỬA HÀNG
+--------------------------------------------------
+* Bảng: User (Người dùng)
+  - user_id (bigint, NOT NULL) [PK]: Mã định danh người dùng.
+  - name (varchar(30), NOT NULL): Tên người dùng.
+  - phone (char(10), NOT NULL): Số điện thoại.
+  - email (varchar(30)): Địa chỉ email.
+  - password (varchar(30), NOT NULL): Mật khẩu đăng nhập.
+  - role (int, NOT NULL): Vai trò / Phân quyền hệ thống.
+
+* Bảng: Shop (Cửa hàng)
+  - shop_id (bigint, NOT NULL) [PK]: Mã định danh cửa hàng.
+  - user_id (bigint, NOT NULL) [FK]: Chủ sở hữu (Liên kết tới bảng User).
+  - name (varchar(30), NOT NULL): Tên cửa hàng.
+  - description (varchar(100)): Mô tả ngắn về cửa hàng.
+  - phone (char(10), NOT NULL): Số điện thoại liên hệ của cửa hàng.
+  - facebook (varchar(100)): Đường dẫn Fanpage Facebook.
+  - address (varchar(100), NOT NULL): Địa chỉ vật lý của cửa hàng.
+
+2. NHÓM QUẢN LÝ SẢN PHẨM & MENU
+--------------------------------------------------
+* Bảng: Category (Danh mục)
+  - category_id (bigint, NOT NULL) [PK]: Mã danh mục sản phẩm.
+  - shop_id (bigint, NOT NULL) [FK]: Thuộc cửa hàng nào (Liên kết tới bảng Shop).
+  - name (varchar(30), NOT NULL): Tên danh mục (Ví dụ: Trà sữa, Cà phê...).
+
+* Bảng: Product (Sản phẩm / Đồ uống)
+  - product_id (bigint, NOT NULL) [PK]: Mã sản phẩm.
+  - category_id (bigint, NOT NULL) [FK]: Thuộc danh mục nào (Liên kết tới bảng Category).
+  - shop_id (bigint, NOT NULL) [FK]: Thuộc cửa hàng nào (Liên kết tới bảng Shop).
+  - name (varchar(30), NOT NULL): Tên món đồ uống.
+  - description (varchar(100)): Mô tả chi tiết món.
+  - price (int, NOT NULL): Giá tiền cơ bản.
+  - available (boolean, NOT NULL): Trạng thái còn hàng (True) hoặc hết hàng (False).
+  - image (varchar(255), NOT NULL): Đường dẫn lưu trữ ảnh sản phẩm.
+
+* Bảng: Topping (Đồ kèm theo)
+  - topping_id (int, NOT NULL) [PK]: Mã topping.
+  - name (varchar(30), NOT NULL): Tên loại topping (Ví dụ: Trân châu, Thạch...).
+  - price (int, NOT NULL): Giá tiền cộng thêm của topping.
+
+3. NHÓM QUẢN LÝ ĐƠN HÀNG & KHUYẾN MẠI
+--------------------------------------------------
+* Bảng: Discount (Mã giảm giá)
+  - discount_id (bigint, NOT NULL) [PK]: Mã giảm giá.
+  - name (varchar(30), NOT NULL): Tên mã hoặc code giảm giá.
+  - value (decimal(10,2), NOT NULL): Giá trị giảm (số tiền cố định hoặc %).
+  - expiration (datetime): Ngày và giờ hết hạn của mã.
+
+* Bảng: Order (Đơn hàng)
+  - order_id (bigint, NOT NULL) [PK]: Mã đơn hàng.
+  - user_id (bigint, NOT NULL) [FK]: Khách hàng đặt đơn (Liên kết tới bảng User).
+  - shop_id (bigint, NOT NULL) [FK]: Đơn đặt tại quán nào (Liên kết tới bảng Shop).
+  - discount_id (bigint, NOT NULL) [FK]: Mã giảm giá được áp dụng (Liên kết tới bảng Discount).
+  - createdAt (DateTime, NOT NULL): Thời gian khởi tạo đơn hàng.
+  - status (varchar(50), NOT NULL): Trạng thái đơn hàng (Chờ duyệt, Đang giao, Thành công...).
+  - price (int, NOT NULL): Tổng giá trị của đơn hàng.
+  - phone (char(10), NOT NULL): Số điện thoại nhận hàng.
+  - address (varchar(100), NOT NULL): Địa chỉ giao hàng thực tế.
+  - note (varchar(100)): Ghi chú riêng từ khách hàng.
+
+* Bảng: OrderItem (Chi tiết đơn hàng)
+  - orderitem_id (bigint, NOT NULL) [PK]: Mã chi tiết mặt hàng trong đơn.
+  - product_id (bigint, NOT NULL) [FK]: Mã sản phẩm được chọn (Liên kết tới bảng Product).
+  - order_id (bigint, NOT NULL) [FK]: Thuộc đơn hàng nào (Liên kết tới bảng Order).
+  - quantity (int, NOT NULL): Số lượng phần đặt mua.
+  - price (int, NOT NULL): Giá sản phẩm tại thời điểm mua hàng.
+
+* Bảng: SelectTopping (Topping được lựa chọn)
+  - select_id (bigint, NOT NULL) [PK]: Mã định danh lượt chọn topping.
+  - topping_id (bigint, NOT NULL) [FK]: Loại topping được thêm (Liên kết tới bảng Topping).
+  - orderitem_id (bigint, NOT NULL) [FK]: Đi kèm với món nào trong đơn (Liên kết tới bảng OrderItem).
+
+4. NHÓM TƯƠNG TÁC & THỐNG KÊ
+--------------------------------------------------
+* Bảng: Comment (Bình luận & Đánh giá)
+  - comment_id (bigint, NOT NULL) [PK]: Mã bình luận.
+  - product_id (bigint, NOT NULL) [FK]: Đánh giá cho sản phẩm nào (Liên kết tới bảng Product).
+  - user_id (bigint, NOT NULL) [FK]: Người thực hiện đánh giá (Liên kết tới bảng User).
+  - orderitem_id (bigint, NOT NULL) [FK]: Gắn với món cụ thể đã mua (Liên kết tới bảng OrderItem).
+  - comment (varchar(100), NOT NULL): Nội dung văn bản bình luận.
+  - evaluate (int, NOT NULL): Số điểm đánh giá (Số sao từ 1 đến 5).
+
+* Bảng: Ingredient (Nguyên liệu kho)
+  - ingredient_id (bigint, NOT NULL) [PK]: Mã nguyên liệu kho.
+  - shop_id (bigint, NOT NULL) [FK]: Thuộc kho hàng của shop nào (Liên kết tới bảng Shop).
+  - quantity (int, NOT NULL): Số lượng tồn kho hiện tại.
+  - description (varchar(100)): Mô tả loại nguyên liệu.
+  - name (varchar(30), NOT NULL): Tên nguyên liệu (Ví dụ: Sữa, Hạt cà phê...).
+
+* Bảng: Statistical (Thống kê báo cáo)
+  - stastical_id (bigint, NOT NULL) [PK]: Mã bản ghi thống kê (Theo đúng chính tả trong sơ đồ).
+  - shop_id (bigint, NOT NULL) [FK]: Số liệu thuộc shop nào (Liên kết tới bảng Shop).
+  - value (int, NOT NULL): Số liệu doanh thu / số đơn hàng.
+  - date (datetime, NOT NULL): Ngày thực hiện chốt số liệu thống kê.
